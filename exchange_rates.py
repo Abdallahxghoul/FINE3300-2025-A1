@@ -14,6 +14,7 @@ class ExchangeRates:
         """
         Read the CSV file and set self.latest_rate
         to the last available USD/CAD exchange rate.
+        The rate is CAD per 1 USD.
         """
         with open(self.csv_path, newline='') as f:
             reader = csv.DictReader(f)
@@ -21,12 +22,14 @@ class ExchangeRates:
 
         # Get the last row (latest date)
         last_row = rows[-1]
-        # The CSV has "USD/CAD" column — convert string to float
+        # Convert string from "USD/CAD" column to float
         self.latest_rate = float(last_row["USD/CAD"])
 
     def convert(self, amount: float, from_currency: str, to_currency: str) -> float:
         """
-        Convert between CAD and USD using the latest rate.
+        Convert between CAD and USD using the latest USD/CAD rate (CAD per 1 USD).
+        - USD → CAD: multiply by the rate
+        - CAD → USD: divide by the rate
         """
         if self.latest_rate is None:
             raise ValueError("Exchange rate not loaded.")
@@ -34,10 +37,12 @@ class ExchangeRates:
         from_currency = from_currency.upper()
         to_currency = to_currency.upper()
 
-        if from_currency == "CAD" and to_currency == "USD":
+        if from_currency == "USD" and to_currency == "CAD":
             return round(amount * self.latest_rate, 2)
-        elif from_currency == "USD" and to_currency == "CAD":
+        elif from_currency == "CAD" and to_currency == "USD":
             return round(amount / self.latest_rate, 2)
+        elif from_currency == to_currency:
+            return round(amount, 2)
         else:
             raise ValueError("Currencies must be CAD or USD only.")
 
