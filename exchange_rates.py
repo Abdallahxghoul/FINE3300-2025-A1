@@ -1,6 +1,6 @@
 # FINE3300 – Assignment 1 (Part 2)
 # Author: Abdallah Al Ghoul
-# Loads the latest USD/CAD rate from the CSV and converts CAD ↔ USD.
+# Loads the latest USD/CAD rate from the CSV and converts CAD to USD and vise versa.
 # Date: 2025-10-05
 
 import csv
