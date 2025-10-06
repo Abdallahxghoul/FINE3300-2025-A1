@@ -1,6 +1,6 @@
 # FINE3300 – Assignment 1 (Part 1)
 # Author: Abdallah Al Ghoul
-# This program calculates Canadian mortgage payments for different schedules.
+# This program calculates mortgage payments for different schedules.
 # Date: 2025-10-05
 
 from dataclasses import dataclass
